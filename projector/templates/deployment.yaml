@@ -13,10 +13,28 @@ spec:
       labels:
         app.kubernetes.io/name: projector
     spec:
+      volumes:
+      - name: projector
+        persistentVolumeClaim:
+          claimName: projector
       containers:
         - name: projector
           image: "{{ .Values.projector.container.repository }}:{{ .Values.projector.container.tag }}"
           imagePullPolicy: Always
+          volumeMounts:
+          - mountPath: /home/projector-user
+            name: projector
+          env:
+            - name: ORG_JETBRAINS_PROJECTOR_SERVER_HANDSHAKE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: projector
+                  key: password-read-write
+            - name: ORG_JETBRAINS_PROJECTOR_SERVER_RO_HANDSHAKE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: projector
+                  key: password-read
           ports:
             - name: http
               containerPort: 8887
