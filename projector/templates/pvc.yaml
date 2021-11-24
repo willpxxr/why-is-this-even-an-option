@@ -3,7 +3,8 @@ kind: PersistentVolume
 metadata:
   name: projector
 spec:
-  capacity:
-    storage: 5Gi
+  resources:
+    requests:
+      storage: 5Gi
   accessModes:
     - ReadWriteOnce
