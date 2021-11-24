@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.projector.hostName }}
+    - host: {{ .Values.projector.hostname }}
       http:
         paths:
           - path: /
@@ -20,5 +20,5 @@ spec:
                   name: http
   tls:
     - hosts:
-        - {{ .Values.projector.hostName }}
+        - {{ .Values.projector.hostname }}
       secretName: projector-cert
