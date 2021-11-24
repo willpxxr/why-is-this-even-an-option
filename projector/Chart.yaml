@@ -1,0 +1,5 @@
+apiVersion: v2
+name: projector
+description: A helm chart for installing Intellij Projector
+type: application
+version: 0.1.0

@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projector
+spec:
+  replicas: {{ .Values.projector.replicationFactor }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: projector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: projector
+    spec:
+      containers:
+        - name: projector
+          image: "{{ .Values.projector.container.repository }}:{{ .Values.projector.container.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8887
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8887
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 8887
+            failureThreshold: 10
+            periodSeconds: 10

@@ -1,0 +1,7 @@
+projector:
+  container:
+    repository: registry.jetbrains.team/p/prj/containers/projector-clion
+    tag: latest
+
+  hostname: clion.ide.willpxxr.com
+  replicationFactor: 1

@@ -1,0 +1,24 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: projector
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.projector.hostName }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name:  projector
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - {{ .Values.projector.hostName }}
+      secretName: projector-cert
